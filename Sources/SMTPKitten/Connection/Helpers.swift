@@ -24,7 +24,8 @@ extension Date {
 
 extension SMTPReply {
     func status(_ status: SMTPCode..., or error: Error? = nil) throws {
-        let error = error ?? SMTPConnectionError.commandFailed(code: code)
+		let detail = lines.map({String(buffer: $0)}).joined(separator: "\n")//undev4
+		let error = error ?? SMTPConnectionError.commandFailed(code: code, detail:detail)
 
         guard let currentStatus = SMTPCode(rawValue: code) else {
             throw error
@@ -41,7 +42,8 @@ extension SMTPReply {
 
     func isSuccessful(or error: Error? = nil) throws {
         guard self.isSuccessful else {
-            throw error ?? SMTPConnectionError.commandFailed(code: code)
+			let detail = lines.map({String(buffer: $0)}).joined(separator: "\n")//undev4
+            throw error ?? SMTPConnectionError.commandFailed(code: code, detail: detail)
         }
     }
 }

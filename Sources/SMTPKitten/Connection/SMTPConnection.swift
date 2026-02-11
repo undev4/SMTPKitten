@@ -158,7 +158,7 @@ public actor SMTPConnection {
                 let serverHello = try await handle.send(ByteBuffer())
 
                 guard serverHello.isSuccessful else {
-                    throw SMTPConnectionError.commandFailed(code: serverHello.code)
+                    throw SMTPConnectionError.commandFailed(code: serverHello.code, detail: "")//undev4
                 }
 
                 // After being accepted as a client, SMTP is request-response based
